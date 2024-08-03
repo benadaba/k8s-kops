@@ -54,20 +54,20 @@ sudo ./aws/install
 
 
 
-## 3) Install kops software on an ubuntu instance by running the commands below:
+## 4) Install kops software on an ubuntu instance by running the commands below:
   ```sh	
 	sudo apt install wget -y
  	sudo wget https://github.com/kubernetes/kops/releases/download/v1.22.0/kops-linux-amd64
  	sudo chmod +x kops-linux-amd64
  	sudo mv kops-linux-amd64 /usr/local/bin/kops
   ```
-## 4) Install kubectl kubernetes client if it is not already installed
+## 5) Install kubectl kubernetes client if it is not already installed
 ```sh
  sudo curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
  sudo chmod +x ./kubectl
  sudo mv ./kubectl /usr/local/bin/kubectl
 ```
-## 5) Create an IAM role from AWS Console or CLI with the below Policies. 
+## 6) Create an IAM role from AWS Console or CLI with the below Policies. 
 
 	AmazonEC2FullAccess 
 	AmazonS3FullAccess
@@ -77,12 +77,12 @@ sudo ./aws/install
 Then Attach IAM role to ubuntu server from Console Select KOPS Server --> Actions --> Instance Settings --> Attach/Replace IAM Role --> Select the role which
 You Created. --> Save.
 
-## 6) create an S3 bucket. this bucket will act as a key-value store
+## 7) create an S3 bucket. this bucket will act as a key-value store
 ## Execute the commands below in your KOPS control Server. use unique s3 bucket name. If you get bucket name exists error.
 	aws s3 mb s3://datapandaskops
 	aws s3 ls # to verify
 	
- ## 6b) create an S3 bucket    
+ ## 7b) create an S3 bucket    
 	Expose environment variable:
     # Add env variables in bashrc
     
@@ -93,19 +93,19 @@ You Created. --> Save.
  
       source .bashrc  
 	
-### 7) Create sshkeys before creating cluster
+### 8) Create sshkeys before creating cluster
 ```sh
     #ssh-keygen
     ssh-keygen -t rsa -b 4096
  ```
 
-# 8) Create kubernetes cluster definitions on S3 bucket
+# 9) Create kubernetes cluster definitions on S3 bucket
 ```sh
 kops create cluster --zones eu-west-2a --networking weave --master-size t2.medium --master-count 1 --node-size t2.medium --node-count=2 ${NAME}
 # copy the sshkey into your cluster to be able to access your kubernetes node from the kops server
 kops create secret --name ${NAME} sshpublickey admin -i ~/.ssh/id_rsa.pub
 ```
-# 9) Initialise your kops kubernetes cluser by running the command below
+# 10) Initialise your kops kubernetes cluser by running the command below
 ```sh
 kops update cluster ${NAME} --yes
 ```
