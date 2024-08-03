@@ -128,9 +128,9 @@ kops validate cluster
 	  kubectl get nodes 
 
 ### 11b) Alternative you can ssh into your kubernetes master server using the command below and manage your cluster from the master
-    sh -i ~/.ssh/id_rsa ubuntu@ipAddress
-    ssh -i ~/.ssh/id_rsa ubuntu@18.222.139.125
-    ssh -i ~/.ssh/id_rsa ubuntu@172.20.58.124
+    ssh ubuntu@<ip-Address-of-master-node>
+    ssh  ubuntu@18.222.139.125
+    ssh  ubuntu@172.20.58.124
 
 ### 11b. Alternative, Enable PasswordAuthentication in the master server and assign passwd
 ```sh
