@@ -113,11 +113,19 @@ kops create cluster --zones eu-west-2a  --control-plane-size t2.medium --control
 # copy the sshkey into your cluster to be able to access your kubernetes node from the kops server
 kops create secret --name ${NAME} sshpublickey admin -i ~/.ssh/id_rsa.pub
 ```
+
+
 # 10) Initialise your kops kubernetes cluser by running the command below
 ```sh
 kops update cluster ${NAME} --yes
 ```
-# 10a) Validate your cluster(KOPS will take some time to create cluster ,Execute below commond after 3 or 4 mins)
+
+## 10a - Export the kubeconfig file to manage your kubernetes cluster from a remote server. For this demo, Our remote server shall be our kops server 
+```sh
+ kops export kubecfg $NAME --admin
+```
+
+# 10b) Validate your cluster(KOPS will take some time to create cluster ,Execute below commond after 3 or 4 mins)
 
 kops validate cluster
 	   
@@ -128,10 +136,7 @@ kops validate cluster
  * the ubuntu user is specific to Ubuntu. If not using Ubuntu please use the appropriate user based on your OS.
  * read about installing addons at: https://kops.sigs.k8s.io/operations/addons.
 
-## 10b - Export the kubeconfig file to manage your kubernetes cluster from a remote server. For this demo, Our remote server shall be our kops server 
-```sh
- kops export kubecfg $NAME --admin
-```
+
 ## 11a) To list nodes and pod to ensure that you can make calls to the kubernetes apiSAerver and run workloads
 	  kubectl get nodes 
 
